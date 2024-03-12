@@ -1,0 +1,1 @@
+Project to animate cellular automata with webGPU.
