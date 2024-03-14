@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Link, Stack, Typography } from "@mui/material";
+import { Box, Grid, Link, Stack, Typography, Button } from "@mui/material";
 
-function App() {
-	const [adapter, setAdapter] = useState(false);
+function Home() {
+	const [adapter, setAdapter] = useState(true);
 
 	useEffect(() => {
 		const getAdapter = async () => {
 			if (!("gpu" in navigator)) {
-				console.error("User agent doesn’t support WebGPU.");
+				console.error("User agent doesn't support WebGPU.");
 				return setAdapter(false);
 			}
 
-			const adapter = await navigator.gpu?.requestAdapter({
+			const adapter = await navigator.gpu.requestAdapter({
 				powerPreference: "high-performance",
 			});
 			const device = await adapter?.requestDevice();
 			//set context current device
 
-			console.log(adapter.requestAdapterInfo());
+			console.log(adapter?.requestAdapterInfo());
 			return setAdapter(true);
 		};
 		getAdapter();
 	}, []);
-
-	//https://developer.chrome.com/docs/web-platform/webgpu?hl=de
 
 	const webGpuLink =
 		"https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API#browser_compatibility";
@@ -37,14 +35,14 @@ function App() {
 			mt={3}
 		>
 			<Typography
-				variant="h2"
 				textAlign="center"
 				color="primary.main"
 				gutterBottom
+				sx={{ typography: { xs: "h4", md: "h2" } }}
 			>
 				Cellular Automata
 			</Typography>
-			<Stack sx={{ m: 2 }} gap={6}>
+			<Stack m={{ xs: 4, md: 6 }} gap={6}>
 				{!adapter && (
 					<Typography
 						fontSize="large"
@@ -64,18 +62,46 @@ function App() {
 						</Link>
 					</Typography>
 				)}
-				<Grid container spacing={3} direction="row">
+				<Grid container direction="row" spacing={{ xs: 4, md: 7 }}>
 					<Grid item xs={12} md={6}>
-						<Box sx={{ p: 2, border: "1px dashed grey" }}></Box>
+						<Button
+							style={{ height: "125px" }}
+							variant="contained"
+							href="game-of-life"
+							fullWidth
+						>
+							<Typography textAlign="center">Game of life</Typography>
+						</Button>
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<Box sx={{ p: 2, border: "1px dashed grey" }}></Box>
+						<Button
+							style={{ height: "125px" }}
+							variant="contained"
+							disabled
+							fullWidth
+						>
+							<Typography textAlign="center">Wolfram</Typography>
+						</Button>
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<Box sx={{ p: 2, border: "1px dashed grey" }}></Box>
+						<Button
+							style={{ height: "125px" }}
+							variant="contained"
+							disabled
+							fullWidth
+						>
+							<Typography textAlign="center">Langton</Typography>
+						</Button>
 					</Grid>
 					<Grid item xs={12} md={6}>
-						<Box sx={{ p: 2, border: "1px dashed grey" }}></Box>
+						<Button
+							style={{ height: "125px" }}
+							variant="contained"
+							disabled
+							fullWidth
+						>
+							<Typography textAlign="center">Nagelschreckenberg</Typography>
+						</Button>
 					</Grid>
 				</Grid>
 			</Stack>
@@ -83,4 +109,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Home;

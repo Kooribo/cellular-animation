@@ -1,7 +1,9 @@
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import Home from "./pages/Home";
+import GameOfLife from "./pages/game-of-life/GameOfLife";
 
 const darkTheme = createTheme({
 	palette: {
@@ -31,6 +33,17 @@ const lightTheme = createTheme({
 		fontFamily: "Ubuntu",
 	},
 });
+
+export default function App() {
+	return (
+		<BrowserRouter basename="/cellular-animation">
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/game-of-life" element={<GameOfLife />} />
+			</Routes>
+		</BrowserRouter>
+	);
+}
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<ThemeProvider theme={darkTheme}>
